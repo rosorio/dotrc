@@ -12,6 +12,16 @@ bindkey  "^[[3~"  delete-char
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
 
+# Filter history (don't log if command ends with #nolog)
+# eg. echo "mypassword" > newfile #nolog
+function zshaddhistory() {
+     if [[ "${1%$'\n'}" = *"#nolog" ]]; then
+        return 2
+     else
+        return 0
+     fi
+}
+
 ## Poudriere aliases
 function alias_poudriere {
     aname=$1
